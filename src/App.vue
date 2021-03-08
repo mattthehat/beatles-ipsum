@@ -1,28 +1,144 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header>
+      <h1>Beatles Ipsum</h1>
+    </header>
+    <div class="ipsum-options">
+      <form @submit.prevent="generateIpsum">
+        <div>
+          <label for="paragraphs">Number of Paragraphs:</label>
+          <input id="paragraphs" type="number" v-model="paragraphs">
+        </div>
+        <button>Generate Ipsum</button>
+      </form>
+    </div>
+    <template v-if="showIpsum">
+      <div class="ipsum-results">
+        <p v-for="p in paragraphs" :key="p" >
+          {{generateRandomSentence()}}
+        </p>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {phrases} from './data/phrases';
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      phrases,
+      paragraphs: 6,
+      showIpsum: false,
+      sentenceLengthMin: 10,
+      sentenceLengthMax: 14
+    }
+  },
+  methods: {
+    getRandomPhrase() {
+      return this.phrases[Math.floor(Math.random() * this.phrases.length)]
+    },
+    generateRandomSentence() {
+      let words = '';
+      let paragraph = '';
+      const numSentences = 4;
+      const sentenceLength = Math.floor(Math.random() * (this.sentenceLengthMax - this.sentenceLengthMin) + this.sentenceLengthMin);
+
+
+      for(let i = 1; i < sentenceLength; i++) {
+        words += this.getRandomPhrase() + ' ';
+      }
+
+      words = words.charAt(0).toUpperCase() + words.slice(1)
+
+      for(let i = 1; i < (Math.floor(Math.random() * numSentences) + 2); i ++) {
+        paragraph += (words.trim().endsWith('?') ? words.trim() : words.trim() + '. ')
+      }
+
+      return paragraph;
+
+    },
+    generateIpsum() {
+      this.showIpsum = false
+      this.showIpsum = true
+    }
+  },
+  computed: {
+    sentence() {
+      return this.generateRandomSentence()
+    }
   }
+  
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+  background: #BB2E20;
+  width:100%;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color:#fff;
+  margin-bottom: 24px;
+}
+
+#app {
+  background: #fff;
+  width:100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  font-size: inherit;
+  font-family: inherit;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  background: #0B1193;
+  color:#fff;
+  display: block;
+  margin-top: 35px;
+}
+
+label {
+  margin-right: 30px;
+}
+
+.ipsum-options {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+}
+
+input {
+  font-size: inherit;
+}
+
+.ipsum-options form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.ipsum-results {
+  padding: 24px;
 }
 </style>
