@@ -14,11 +14,7 @@
     </div>
     <template v-if="showIpsum">
       <div class="ipsum-results">
-<<<<<<< HEAD
         <p v-for="p in parseInt(paragraphs)" :key="p" >
-=======
-        <p v-for="p in paragraphs" :key="p" >
->>>>>>> main
           {{generateRandomSentence()}}
         </p>
       </div>
