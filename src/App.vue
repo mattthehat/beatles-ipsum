@@ -13,10 +13,7 @@
       </form>
     </div>
     <template v-if="showIpsum">
-      <div class="ipsum-results">
-        <p v-for="p in parseInt(paragraphs)" :key="p" >
-          {{generateRandomSentence()}}
-        </p>
+        <div class="ipsum-results" ref="ipsum" v-html="generateParagraphs()">
       </div>
     </template>
   </div>
@@ -33,7 +30,7 @@ export default {
       paragraphs: 6,
       showIpsum: false,
       sentenceLengthMin: 10,
-      sentenceLengthMax: 14
+      sentenceLengthMax: 14,
     }
   },
   methods: {
@@ -60,22 +57,19 @@ export default {
       return paragraph;
 
     },
+    generateParagraphs() {
+      let paragraphs = '';
+      for(let i = 0; i < this.paragraphs; i++) {
+        paragraphs += '<p>' + this.generateRandomSentence() + '</p>';
+      }
+
+      return paragraphs;
+    },
     generateIpsum() {
       this.showIpsum = false
       this.showIpsum = true
-    }
+    },
   },
-  computed: {
-    sentence() {
-      return this.generateRandomSentence()
-    }
-  },
-  updated() {
-    if(this.paragraphs > 12) {
-      this.paragraphs = 12
-    }
-  }
-  
 }
 </script>
 
@@ -116,7 +110,6 @@ header h1 {
 }
 
 header {
-  background: #BB2E20;
   width:100%;
   text-align: center;
   color:#fff;
@@ -124,7 +117,7 @@ header {
 }
 
 #app {
-  background: #fff;
+  background: #000;
   width:100%;
   box-sizing: border-box;
   display: flex;
@@ -140,8 +133,7 @@ button {
   cursor: pointer;
   background: #fff;
   color:#000;
-  background: #0B1193;
-  color:#fff;
+  background: #fff;
   display: block;
   margin-top: 35px;
 }
