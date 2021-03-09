@@ -14,7 +14,11 @@
     </div>
     <template v-if="showIpsum">
       <div class="ipsum-results">
+<<<<<<< HEAD
         <p v-for="p in parseInt(paragraphs)" :key="p" >
+=======
+        <p v-for="p in paragraphs" :key="p" >
+>>>>>>> main
           {{generateRandomSentence()}}
         </p>
       </div>
@@ -113,6 +117,18 @@ header h1 {
 
 #app {
   background:#000;
+}
+
+header {
+  background: #BB2E20;
+  width:100%;
+  text-align: center;
+  color:#fff;
+  margin-bottom: 24px;
+}
+
+#app {
+  background: #fff;
   width:100%;
   box-sizing: border-box;
   display: flex;
@@ -128,6 +144,8 @@ button {
   cursor: pointer;
   background: #fff;
   color:#000;
+  background: #0B1193;
+  color:#fff;
   display: block;
   margin-top: 35px;
 }
