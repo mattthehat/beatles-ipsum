@@ -69,6 +69,11 @@ export default {
     sentence() {
       return this.generateRandomSentence()
     }
+  },
+  updated() {
+    if(this.paragraphs > 12) {
+      this.paragraphs = 12
+    }
   }
   
 }
@@ -151,5 +156,7 @@ input {
 .ipsum-results {
   padding: 24px;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 960px;
 }
 </style>
